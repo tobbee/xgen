@@ -123,6 +123,19 @@ func (opt *Options) Parse() (err error) {
 			if err = opt.OnCharData(string(element), opt.ProtoTree); err != nil {
 				return
 			}
+		case xml.Directive:
+			dStr := string(element)
+			entities, ok := parseDoctype(dStr)
+			if ok {
+				fmt.Println("Found DOCTYPE. Write entities to file entities.txt")
+				decoder.Entity = entities
+				ofh, _ := os.Create("entities.txt")
+				for k, v := range decoder.Entity {
+					fmt.Fprintf(ofh, "%s: %s\n", k, v)
+				}
+				ofh.Close()
+			}
+
 		default:
 		}
 
