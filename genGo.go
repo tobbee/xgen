@@ -203,7 +203,7 @@ func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
 			if fieldType == "time.Time" {
 				gen.ImportTime = true
 			}
-			content += fmt.Sprintf("\t%sAttr\t%s\t`xml:\"%s,attr%s\"`\n", genGoFieldName(attribute.Name, false), fieldType, attribute.Name, optional)
+			content += fmt.Sprintf("\t%s\t%s\t`xml:\"%s,attr%s\"`\n", genGoFieldName(attribute.Name, false), fieldType, attribute.Name, optional)
 		}
 		for _, group := range v.Groups {
 			var plural string
@@ -291,7 +291,7 @@ func (gen *CodeGenerator) GoAttributeGroup(v *AttributeGroup) {
 			if attribute.Optional {
 				optional = `,omitempty`
 			}
-			content += fmt.Sprintf("\t%sAttr\t%s\t`xml:\"%s,attr%s\"`\n", genGoFieldName(attribute.Name, false), genGoFieldType(getBasefromSimpleType(trimNSPrefix(attribute.Type), gen.ProtoTree)), attribute.Name, optional)
+			content += fmt.Sprintf("\t%s\t%s\t`xml:\"%s,attr%s\"`\n", genGoFieldName(attribute.Name, false), genGoFieldType(getBasefromSimpleType(trimNSPrefix(attribute.Type), gen.ProtoTree)), attribute.Name, optional)
 		}
 		content += "}\n"
 		gen.StructAST[v.Name] = content
